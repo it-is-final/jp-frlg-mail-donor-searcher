@@ -1,0 +1,24 @@
+{
+  "name": "jp-frlg-mail-donor-searcher",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "npm run build && npx serve dist/",
+    "build": "npx esbuild src/index.ts --bundle --outfile=dist/index.js && shx cp src/html/index.html dist/",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "it-is-final",
+  "license": "MIT",
+  "description": "",
+  "devDependencies": {
+    "@eslint/js": "^9.15.0",
+    "esbuild": "^0.24.0",
+    "eslint": "^9.15.0",
+    "globals": "^15.12.0",
+    "prettier": "^3.3.3",
+    "serve": "^14.2.4",
+    "shx": "^0.3.4",
+    "typescript": "^5.6.3",
+    "typescript-eslint": "^8.15.0"
+  }
+}

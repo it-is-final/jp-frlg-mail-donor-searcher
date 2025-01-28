@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+      "module": "ESNext",
+      "esModuleInterop": true,
+      "target": "ES2019",
+      "moduleResolution": "node",
+      "sourceMap": true,
+      "noEmit": true,
+      "allowImportingTsExtensions": true,
+      "allowJs": true
+    },
+    "lib": ["ES2019"],
+    "include": [
+      "eslint.config.mjs"
+    ]
+  }

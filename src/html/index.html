@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Donor Search</title>
+    <style>
+      #params {
+        display: flex;
+        flex-direction: column;
+        max-width: 15em;
+        gap: 0.15em;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Donor Search for Pokémon FRLG ACE</h1>
+    <main>
+      <form id="params">
+        <fieldset style="grid-column: 2">
+          <legend>Game version</legend>
+          <input
+            type="radio"
+            name="game"
+            id="fire-red-radio"
+            value="firered"
+            required
+          />
+          <label for="fire-red-radio">FireRed</label>
+          <input
+            type="radio"
+            name="game"
+            id="leaf-green-radio"
+            value="leafgreen"
+            required
+          />
+          <label for="leaf-green-radio">LeafGreen</label>
+        </fieldset>
+        <fieldset style="grid-column: 2">
+          <legend>Encounter type</legend>
+          <input
+            type="radio"
+            name="encounter-type"
+            id="static-encounter-radio"
+            value="static"
+            required
+          />
+          <label for="static-encounter-radio">Static</label>
+          <input
+            type="radio"
+            name="encounter-type"
+            id="wild-encounter-radio"
+            value="wild"
+            required
+          />
+          <label for="wild-encounter-radio">Wild</label>
+        </fieldset>
+        <label for="seed">Seed:</label>
+        <input
+          id="seed"
+          name="seed"
+          type="text"
+          size="4"
+          pattern="[0-9A-Fa-f]{0,4}"
+          maxlength="4"
+          required
+        />
+        <label for="tid">TID:</label>
+        <input
+          id="tid"
+          name="tid"
+          type="number"
+          size="5"
+          min="0"
+          max="65535"
+          required
+        />
+        <label for="initial-advances">Initial advances:</label>
+        <input
+          id="initial-advances"
+          name="initial-advances"
+          type="number"
+          size="6"
+          min="0"
+          required
+        />
+        <label for="advances">Advances:</label>
+        <input
+          id="advances"
+          name="advances"
+          type="number"
+          size="6"
+          min="1"
+          required
+        />
+        <label for="delay">Delay:</label>
+        <input
+          id="delay"
+          name="delay"
+          type="number"
+          size="4"
+          min="0"
+          required
+        />
+        <button id="params-calc-button" type="submit">Calculate</button>
+      </form>
+      <output>
+        <table>
+          <thead>
+            <tr>
+              <th>Advance</th>
+              <th>PID</th>
+            </tr>
+          </thead>
+          <tbody id="results-body"></tbody>
+        </table>
+      </output>
+    </main>
+    <footer>
+      <small
+        >© Luong Truong <span id="copyright-year"> </span>. This project is licensed under the terms of the
+        MIT license, for more information, check the license file
+        <a>here</a>.</small
+      >
+    </footer>
+    <script src="index.js"></script>
+  </body>
+</html>
