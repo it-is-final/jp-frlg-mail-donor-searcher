@@ -16,16 +16,16 @@ enum AdjustmentType {
 }
 
 class PokeRNG {
-  state: bigint;
+  state: number;
   constructor(seed: number) {
-    this.state = BigInt(seed);
+    this.state = seed >>> 0;
   }
 
   next(advances: number = 1) {
     for (let i = 0; i < advances; i++) {
-      this.state = (0x41c64e6dn * this.state + 0x00006073n) & 0xffffffffn;
+      this.state = ((Math.imul(0x41c64e6d, this.state) >>> 0) + 0x6073) >>> 0;
     }
-    return Number(this.state) >>> 0;
+    return this.state;
   }
 
   next16(advances: number = 1) {
