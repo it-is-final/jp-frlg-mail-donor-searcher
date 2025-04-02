@@ -1779,6 +1779,7 @@ export const easyChatData = new Map([
   [0x2af9, { Group: 'ポケモン', Word: 'ルギア' }],
   [0x2afa, { Group: 'ポケモン', Word: 'ホウオウ' }],
   [0x2afb, { Group: 'ポケモン', Word: 'セレビィ' }],
+  [0xffff, { Group: '―――――', Word: '―――――' }],
 ]);
 
 export const fireRedData = new Map([
