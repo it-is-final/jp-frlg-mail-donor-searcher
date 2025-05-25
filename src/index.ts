@@ -1,18 +1,12 @@
-import { easyChatData, fireRedData, leafGreenData } from './data';
+import { easyChatWords, fireRedData, leafGreenData } from './data';
 
 const paramsForm = document.getElementById('params') as HTMLFormElement;
 
-const EV_ADJUST_SSTRUCTS = new Set([8, 22]);
-const EXP_ADJUST_SSTRUCTS = new Set([6, 7, 12, 13, 18, 19]);
+const COMPATIBLE_SUBSTRUCTURE_ORDERS = new Set([6, 7, 8, 12, 13, 18, 19, 22]);
 
 interface Advance {
   advance: number;
   pid: number;
-}
-
-enum AdjustmentType {
-  EV,
-  EXP,
 }
 
 class PokeRNG {
@@ -72,56 +66,42 @@ function* wildPIDRNG(
   }
 }
 
-function getPIDSStruct(pid: number) {
-  return (pid >>> 0) % 24;
-}
-
-function getAdjustmentType(pid: number) {
-  const pidSStruct = getPIDSStruct(pid);
-  if (EV_ADJUST_SSTRUCTS.has(pidSStruct)) {
-    return AdjustmentType.EV;
-  }
-  if (EXP_ADJUST_SSTRUCTS.has(pidSStruct)) {
-    return AdjustmentType.EXP;
-  }
-  return null;
-}
-
-function findSpeciesWords(
+function hasSpeciesWords(
   pid: number,
   tid: number,
-  glitchmonList: Map<number, number>,
+  glitchmonList: number[],
 ) {
-  const words: [number, number][] = [];
   const encryptionKey = ((pid >>> 0) ^ (tid >>> 0)) & 0xffff;
-  for (const glitchMonIndex of glitchmonList.keys()) {
+  for (const glitchMonIndex of glitchmonList) {
     const encryptedValue = glitchMonIndex ^ encryptionKey;
-    if (easyChatData.has(encryptedValue)) {
-      words.push([glitchMonIndex, encryptedValue]);
+    if (easyChatWords.has(encryptedValue)) {
+      // No need to check all of them as the species words
+      // are not visible in this tool.
+      return true;
     }
   }
-  return words;
+  return false;
 }
 
 function searchPIDRNG(
   tid: number,
   initialAdvances: number,
   rng: Generator<number, void, unknown>,
-  glitchmonList: Map<number, number>,
+  glitchmonList: number[],
 ) {
   const usableAdvances: Advance[] = [];
-  let advanceCount: number = initialAdvances;
+  let advanceCount: number = initialAdvances - 1;
   for (const pid of rng) {
-    if (
-      getAdjustmentType(pid >>> 0) !== null &&
-      findSpeciesWords(pid, tid, glitchmonList).length > 0
-    ) {
+    advanceCount++;
+    if (!COMPATIBLE_SUBSTRUCTURE_ORDERS.has((pid >>> 0) % 24)) {
+      continue
+    }
+    if (hasSpeciesWords(pid, tid, glitchmonList)) {
       usableAdvances.push({
         advance: advanceCount,
         pid: pid,
       });
     }
-    advanceCount++;
   }
   return usableAdvances;
 }
@@ -130,7 +110,7 @@ paramsForm.onsubmit = () => false;
 paramsForm.addEventListener('submit', function (e) {
   e.preventDefault();
   const params = new FormData(this);
-  let glitchmonList: Map<number, number>;
+  let glitchmonList: number[];
   let rng: Generator<number, void, unknown>;
   switch (params.get('encounter-type') as string) {
     case 'static':
