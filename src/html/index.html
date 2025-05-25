@@ -5,19 +5,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Donor Search</title>
     <style>
-      #params {
+      body {
+        font-family: sans-serif;
+      }
+      main {
         display: flex;
-        flex-direction: column;
-        max-width: 15em;
-        gap: 0.15em;
+        gap: 1em;
+        flex-flow: row wrap;
+        margin: 0 auto;
+      }
+
+      #params {
+        display: grid;
+        grid-template-columns: auto auto;
+        max-width: 20em;
+        gap: 0.5em;
+      }
+
+      #game-version-group {
+        grid-column: 1 / span 2;
+      }
+
+      #encounter-type-group {
+        grid-column: 1 / span 2;
+      }
+
+      #params-calc-button {
+        grid-column: 1 / span 2;
+      }
+
+      table {
+        width: 40em;
+        table-layout: fixed;
+        display: block;
+      }
+      thead {
+        width: 100%;
+        display: block;
+      }
+      tbody#results-body {
+        display: block;
+        height: 20em;
+        overflow: auto;
+        width: 100%;
+      }
+      table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+      table th, table td {
+        text-align: left;
+        padding: 0.25em;
+        width: 20em;
       }
     </style>
   </head>
   <body>
-    <h1>Donor Search for Pokémon FRLG ACE</h1>
+    <h1>Donor Search</h1>
     <main>
       <form id="params">
-        <fieldset style="grid-column: 2">
+        <fieldset id="game-version-group">
           <legend>Game version</legend>
           <input
             type="radio"
@@ -36,7 +83,7 @@
           />
           <label for="leaf-green-radio">LeafGreen</label>
         </fieldset>
-        <fieldset style="grid-column: 2">
+        <fieldset id="encounter-type-group">
           <legend>Encounter type</legend>
           <input
             type="radio"
@@ -118,7 +165,7 @@
     </main>
     <footer>
       <small
-        >© Luong Truong <span id="copyright-year"> </span>. This project is
+        >© final <span id="copyright-year"> </span>. This project is
         licensed under the terms of the MIT license, for more information, check
         the license file
         <a
